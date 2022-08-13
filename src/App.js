@@ -2,18 +2,20 @@ import React from 'react';
 import './App.css';
 async function searchNews(q) {
   q = encodeURIComponent(q);
-  const response = await fetch(`https://google-news.p.rapidapi.com/v1/top_headlines?lang=pl&country=PL${q}`, {
+  const response = await fetch(`https://bing-news-search1.p.rapidapi.com/news/search?cc=PL&freshness=Day&textFormat=Raw&safeSearch=Strict&q=${q}`, {
     "method": "GET",
     "headers": {
-      "x-rapidapi-host": "google-news.p.rapidapi.com",
-      "x-rapidapi-key": 'f226ca5405msh9516b95a617e234p104469jsnbbd3bcacf90e',
+		  'X-RapidAPI-Key': 'f226ca5405msh9516b95a617e234p104469jsnbbd3bcacf90e',
+		  'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com',
+      "x-bingapis-sdk": "true"
     }
   });
+
   const body = await response.json();
   return body.value;
 }
 function App() {
-  const [query, setQuery] = React.useState("macos");
+  const [query, setQuery] = React.useState("Nowe");
   const [list, setList] = React.useState(null);
   const search = (e) => {
     e.preventDefault();
@@ -42,7 +44,6 @@ function App() {
     </div>
   );
 }
-
 function Item({ item }) {
   const separateWords = s => s.replace(/[A-Z][a-z]+/g, '$& ').trim();
   const formatDate = s => new Date(s).toLocaleDateString(undefined, { dateStyle: 'long' });
